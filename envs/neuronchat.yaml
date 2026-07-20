@@ -1,0 +1,12 @@
+name: neuronchat-downstream
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4
+  - r-seurat
+  - r-dplyr
+  - r-cowplot
+  - r-rcolorbrewer
+  - bioconductor-complexheatmap
+  - r-devtools

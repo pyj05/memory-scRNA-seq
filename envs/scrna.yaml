@@ -1,0 +1,23 @@
+name: scrna-downstream
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4
+  - r-seurat
+  - r-tidyverse
+  - r-ggrepel
+  - r-openxlsx
+  - r-patchwork
+  - r-cowplot
+  - r-ggraph
+  - r-igraph
+  - r-stringdb
+  - r-ggsankey
+  - r-cols4all
+  - r-reshape2
+  - bioconductor-clusterprofiler
+  - bioconductor-org.mm.eg.db
+  - bioconductor-reactomepa
+  - bioconductor-enrichplot
+  - bioconductor-complexheatmap

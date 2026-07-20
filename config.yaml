@@ -1,0 +1,11 @@
+data:
+  annotation_data: data/annotation_data.rds
+  neurons_subclass: data/neurons_subclass.rds
+
+analysis:
+  comparison_groups:
+    - Other_con
+    - Acquisition_con
+    - Retrieval_con
+    - Overlapping_con
+  focal_subclass: C0
