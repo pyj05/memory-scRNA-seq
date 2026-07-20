@@ -1,6 +1,6 @@
-# Single-cell RNA-seq downstream analysis workflow
+# Introduction
 
-This workflow organizes the supplied annotated Seurat objects and downstream R analyses into reproducible Snakemake rules.
+This workflow organizes the supplied annotated Seurat objects and downstream R analyses into reproducible Snakemake rules. This is part of the data analysis for the manuscript "UTX preserves remote memory by orchestrating engram persistence through chromatin remodeling."
 
 ## Inputs
 
@@ -21,7 +21,7 @@ The data files are hard-linked to the supplied files to avoid duplicating large 
 
 Create the Snakemake environment, then run from this directory:
 
-```powershell
+```
 conda create -n snakemake -c conda-forge -c bioconda snakemake
 conda activate snakemake
 snakemake --use-conda --cores 1
