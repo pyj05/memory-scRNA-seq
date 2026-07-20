@@ -1,3 +1,12 @@
+library(Seurat)
+library(dplyr)
+library(tibble)
+library(STRINGdb)
+library(igraph)
+library(ggraph)
+library(ggplot2)
+library(openxlsx)
+
 if (!exists("snakemake")) {
   stop("Run this script through Snakemake.")
 }
@@ -18,10 +27,6 @@ ggsave <- function(filename, ...) {
   dir.create(dirname(filename), recursive = TRUE, showWarnings = FALSE)
   ggplot2::ggsave(filename = filename, ...)
 }
-library(Seurat)
-library(dplyr)
-library(tibble)
-
 input_deg_dir <- file.path(snakemake@input[["neuronal_results"]], "differential_expression")
 read_deg_table <- function(filename) {
   read.delim(file.path(input_deg_dir, filename), row.names = 1, check.names = FALSE)
@@ -33,12 +38,6 @@ overlapping_filtered <- read_deg_table("overlapping_vs_other.tsv")
 dir.create(file.path(results_dir, "PPI"), recursive = TRUE, showWarnings = FALSE)
 
 # PPI networks
-library(STRINGdb)  
-library(igraph)  
-library(ggraph)  
-library(ggplot2)  
-
-
 string_db <- STRINGdb$new(version = "12.0", species = 10090, score_threshold = 400, input_directory = "")  
 
 
@@ -163,12 +162,6 @@ get_ppi_graph(
 )
 
 # PPI betweenness visualizations
-library(STRINGdb)  
-library(igraph)  
-library(ggraph)  
-library(ggplot2)  
-
-
 string_db <- STRINGdb$new(version = "12.0", species = 10090, score_threshold = 400, input_directory = "")  
 
 
@@ -263,11 +256,6 @@ get_ppi_graph_with_gradients(
 )
 
 # PPI hub-gene tables
-library(STRINGdb)  
-library(igraph)  
-library(openxlsx)
-
-
 string_db <- STRINGdb$new(version = "12.0", species = 10090, score_threshold = 400, input_directory = "")  
 
 

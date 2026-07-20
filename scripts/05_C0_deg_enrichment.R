@@ -1,3 +1,23 @@
+library(tidyverse)
+library(ggsankey)
+library(ggplot2)
+library(cols4all)
+library(cowplot)
+library(dplyr)
+library(ComplexHeatmap)
+library(circlize)
+library(grid)
+library(reshape2)
+library(patchwork)
+library(openxlsx)
+library(Seurat)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(enrichplot)
+library(ReactomePA)
+library(ggrepel)
+library(tibble)
+
 if (!exists("snakemake")) {
   stop("Run this script through Snakemake.")
 }
@@ -19,26 +39,6 @@ ggsave <- function(filename, ...) {
   ggplot2::ggsave(filename = filename, ...)
 }
 # C0 neuronal-subclass differential expression and functional enrichment
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-
-
-
 neurons <- readRDS(snakemake@input[["neurons"]])
 neurons_con <- neurons %>%
   subset(group %in% grep("_con$", group, value = TRUE))
@@ -196,12 +196,6 @@ saveWorkbook(wb, file = "C0_enrichment_results.xlsx", overwrite = TRUE)
 
 
 # C0 volcano plots
-library(ggrepel)
-library(ggplot2)
-library(dplyr)
-library(tibble)
-
-
 volcano_plot <- function(DEG_list, objectname){
   DEG_list <- DEG_list %>%
     mutate(Difference = pct.1 - pct.2) %>%
@@ -265,12 +259,6 @@ for (name in names(DEG_list)) {
 }
 
 # C0 retrieval-versus-acquisition volcano plot
-library(ggrepel)
-library(ggplot2)
-library(dplyr)
-library(tibble)
-library(Seurat)
-
 Idents(neurons_con_C0) <- neurons_con_C0@meta.data$group
 
 C0_retrieval_vs_acquisition <- FindMarkers(neurons_con_C0, ident.1 = "Retrieval_con", ident.2 = "Acquisition_con")
@@ -334,26 +322,6 @@ for (name in names(DEG_list)) {
 }
 
 # C0 enrichment plots
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-
-
-
 extract_gene_pathway <- function(df) {
   gene_list <- strsplit(df$geneID, "/")
   result <- data.frame(

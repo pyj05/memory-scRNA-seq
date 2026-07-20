@@ -1,3 +1,24 @@
+library(tidyverse)
+library(ggsankey)
+library(ggplot2)
+library(cols4all)
+library(cowplot)
+library(dplyr)
+library(ComplexHeatmap)
+library(circlize)
+library(grid)
+library(reshape2)
+library(patchwork)
+library(openxlsx)
+library(Seurat)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(enrichplot)
+library(ReactomePA)
+library(ggrepel)
+library(tibble)
+library(scales)
+
 if (!exists("snakemake")) {
   stop("Run this script through Snakemake.")
 }
@@ -19,26 +40,6 @@ ggsave <- function(filename, ...) {
   ggplot2::ggsave(filename = filename, ...)
 }
 # Differential expression and functional enrichment for all neuronal cells
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-
-
-
 neurons <- readRDS(snakemake@input[["neurons"]])
 neurons_con <- neurons %>%
   subset(group %in% grep("_con$", group, value = TRUE))
@@ -212,10 +213,6 @@ for (name in names(enrichment_list)) {
 saveWorkbook(wb, file = "enrichment_results.xlsx", overwrite = TRUE)
 
 # Selected functional-enrichment tables
-library(openxlsx)  
-library(dplyr)  
-
-
 entry_list <- list(  
   acquisition_go_bp = c("GO:0031345", "GO:0010977", "GO:0050767"),  
   acquisition_go_mf = c("GO:0003779", "GO:0001227"),  
@@ -324,12 +321,6 @@ saveWorkbook(wb, file = "enrichment_results_filtered.xlsx", overwrite = TRUE)
 
 
 # Volcano plots for all neuronal comparisons
-library(ggrepel)
-library(ggplot2)
-library(dplyr)
-library(tibble)
-
-
 volcano_plot <- function(DEG_list, objectname){
   DEG_list <- DEG_list %>%
     mutate(Difference = pct.1 - pct.2) %>%
@@ -393,26 +384,6 @@ for (name in names(DEG_list)) {
 }
 
 # Retrieval-versus-acquisition enrichment
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-
-
-
 Idents(neurons_con) <- neurons_con@meta.data$group
 
 retrieval_vs_acquisition <- FindMarkers(neurons_con, ident.1 = "Retrieval_con", ident.2 = "Acquisition_con")
@@ -510,12 +481,6 @@ saveWorkbook(wb, file = "retrieval_vs_acquisition_enrichment_results.xlsx", over
 
 
 # Retrieval-versus-acquisition volcano plot
-library(ggrepel)
-library(ggplot2)
-library(dplyr)
-library(tibble)
-
-
 volcano_plot <- function(DEG_list, objectname){
   DEG_list <- DEG_list %>%
     mutate(Difference = pct.1 - pct.2) %>%
@@ -575,26 +540,6 @@ for (name in names(DEG_list)) {
 }
 
 # Retrieval-versus-acquisition enrichment plots
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-
-
-
 extract_gene_pathway <- function(df) {
   gene_list <- strsplit(df$geneID, "/")
   result <- data.frame(
@@ -787,27 +732,6 @@ for (name in names(enrichment_list)) {
 }
 
 # Labeled enrichment plots
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-library(scales)
-
-
-
 extract_gene_pathway <- function(df) {
   gene_list <- strsplit(df$geneID, "/")
   result <- data.frame(
@@ -1047,26 +971,6 @@ for (name in names(enrichment_list)) {
 }
 
 # Unlabeled enrichment plots
-library(tidyverse)
-library(ggsankey)
-library(ggplot2)
-library(cols4all)
-library(cowplot)
-library(dplyr)
-library(ComplexHeatmap)
-library(circlize)
-library(grid)
-library(reshape2)
-library(patchwork)
-library(openxlsx)
-library(Seurat)
-library(clusterProfiler)
-library(org.Mm.eg.db) 
-library(enrichplot)
-library(ReactomePA)
-
-
-
 extract_gene_pathway <- function(df) {
   gene_list <- strsplit(df$geneID, "/")
   result <- data.frame(
@@ -1260,13 +1164,6 @@ for (name in names(enrichment_list)) {
 }
 
 # Marker-expression heatmap
-library(ggplot2)
-library(dplyr)
-library(ComplexHeatmap)
-library(grid)
-library(Seurat)
-library(reshape2)
-
 Idents(neurons_con) <- neurons_con@meta.data$group
 Acquisition_character <- FindMarkers(neurons_con, ident.1 = "Acquisition_con", logfc.threshold = 0.25)
 Retrieval_character <- FindMarkers(neurons_con, ident.1 = "Retrieval_con", logfc.threshold = 0.25)

@@ -1,3 +1,7 @@
+library(Seurat)
+library(dplyr)
+library(ggplot2)
+
 if (!exists("snakemake")) {
   stop("Run this script through Snakemake.")
 }
@@ -24,13 +28,6 @@ ggsave <- function(filename, ...) {
   ggplot2::ggsave(filename = filename, ...)
 }
 # Cell-class composition and t-SNE
-library(Seurat)
-library(dplyr)
-library(ggplot2)
-
-
-
-
 #data <- readRDS("annotation_data.rds")
 #data_con <-  data %>%
   #subset(group %in% grep("_con$", group, value = TRUE))
@@ -131,12 +128,6 @@ ggsave(
 
 
 # Neuronal-subclass composition and t-SNE
-library(Seurat)
-library(dplyr)
-library(ggplot2)
-
-
-
 meta_data <- neurons_con@meta.data
 
 cell_counts <- meta_data %>%

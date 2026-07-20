@@ -1,3 +1,12 @@
+library(Seurat)
+library(NeuronChat)
+library(dplyr)
+library(CellChat)
+library(cowplot)
+library(grid)
+library(ComplexHeatmap)
+library(RColorBrewer)
+
 if (!exists("snakemake")) {
   stop("Run this script through Snakemake.")
 }
@@ -22,17 +31,6 @@ neurons <- readRDS(snakemake@input[["neurons"]])
 neurons_con <- subset(neurons, group %in% grep("_con$", group, value = TRUE))
 
 # NeuronChat analysis across experimental groups
-library(Seurat)
-library(NeuronChat)
-library(dplyr)
-library(CellChat)
-library(cowplot)
-library(grid)
-library(ComplexHeatmap)
-library(RColorBrewer)
-
-
-
 subset_Acquisition_con <- subset(neurons_con, subset = group == 'Acquisition_con')
 subset_Retrieval_con <- subset(neurons_con, subset = group == 'Retrieval_con')
 subset_Overlapping_con <- subset(neurons_con, subset = group == 'Overlapping_con')
